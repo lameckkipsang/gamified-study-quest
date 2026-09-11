@@ -84,6 +84,7 @@ def quiz_app():
 
   random.shuffle(questions)
   score = 0
+
   # Loop through each question
   for quiz in questions:
     print("\n" + quiz["question"])
@@ -92,8 +93,15 @@ def quiz_app():
     for key, val in quiz["choices"].items():
       print(f"{key}: {val}")
 
-    # Get answer from user
-    answer = input("\nYour answer (A, B, C, or D): ").strip().upper()
+    # Get answer from user with try/except validation
+    while True:
+      try:
+        answer = input("\nYour answer (A, B, C, or D): ").strip().upper()
+        if answer not in ["A", "B", "C", "D"]:
+          raise ValueError("Invalid choice. Please enter A, B, C, or D only.")
+        break
+      except ValueError as error:
+        print(f"{error}")
 
     # Check answer
     if answer == quiz["answer"]:
@@ -115,7 +123,6 @@ def quiz_app():
     print("Feedback: Good!")
   else:
     print("Feedback: Try Again!")
-
 
 
 quiz_app()
